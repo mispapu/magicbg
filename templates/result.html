@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9262043823128781"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="autorelaxed"
+     data-ad-client="ca-pub-3940256099942544"
+></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MagicBG - Result</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      text-align: center;
+      margin: 0;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background: #f8f8f8;
+      border-bottom: 1px solid #ddd;
+    }
+    .left-buttons button {
+      background: #ffeb3b;
+      border: none;
+      padding: 10px 14px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 25px;
+      margin-right: 8px;
+    }
+    .right-logo { font-weight: bold; font-size: 30px; }
+    .result-container { margin-top: 30px; }
+    .image-box { display:inline-block; margin: 20px; vertical-align: top; }
+    .image-box h3 { margin-bottom: 10px; }
+    .image-box img { max-width: 320px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.2); }
+    .download-btn, .hd-btn, .color-btn {
+      margin-top: 12px;
+      padding: 10px 14px;
+      font-size: 16px;
+      background: #4caf50;
+      color:white;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      display: inline-block;
+    }
+    .hd-btn { background: #2196f3; }
+    .color-btn { background: #ff5722; }
+    #colorPicker {
+      display: none;
+      margin-top: 10px;
+      cursor: pointer;
+      height: 40px;
+      width: 60px;
+      border: none;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="left-buttons">
+    <button onclick="window.location.href='/'">🏠Home</button>
+  </div>
+  <div class="right-logo">✨ MagicBG</div>
+</header>
+
+<div class="result-container">
+  <h2>Background Removed!</h2>
+
+  <div class="image-box">
+    <h3>Original Image</h3>
+    <img src="{{ url_for('static', filename='uploads/' + original_filename) }}" alt="Original Image">
+  </div>
+
+  <div class="image-box">
+    <h3>Without Background</h3>
+    <img id="resultImage" src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Background Removed Image">
+    <br>
+    <a href="{{ url_for('download_image', quality='standard', filename=std_filename) }}">
+      <button class="download-btn">⬇ Download</button>
+    </a>
+    <a href="{{ url_for('download_image', quality='hd', filename=filename) }}">
+      <button class="hd-btn">⬇ Download HD</button>
+    </a>
+    <button class="color-btn" onclick="showColorPicker()">🎨 Color</button>
+    <input type="color" id="colorPicker" onchange="applyBackgroundColor(this.value)">
+  </div>
+</div>
+
+<script>
+let originalTransparentImageSrc = "{{ url_for('static', filename='uploads/' + filename) }}";
+
+function showColorPicker() {
+  document.getElementById('colorPicker').click();
+}
+
+function applyBackgroundColor(color) {
+  const img = document.getElementById('resultImage');
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  const tempImg = new Image();
+  tempImg.crossOrigin = "anonymous";
+  tempImg.src = originalTransparentImageSrc;
+  tempImg.onload = function() {
+    canvas.width = tempImg.width;
+    canvas.height = tempImg.height;
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(tempImg, 0, 0);
+    img.src = canvas.toDataURL("image/png");
+  }
+}
+
+</script>
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9262043823128781"
+     crossorigin="anonymous"></script>
+<!-- Top Banner ad -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3940256099942544"
+    data-ad-slot="6300978111"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+</body>
+</html>
