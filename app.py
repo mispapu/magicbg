@@ -13,6 +13,12 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
+def resize_image(img, max_size=(800, 800)):
+    """Resize image to reduce memory usage before background removal"""
+    img.thumbnail(max_size)  # maintains aspect ratio
+    return img
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -34,6 +40,7 @@ def upload():
     # Background removal
     with Image.open(orig_path) as img:
         img = img.convert("RGBA")
+        img = resize_image(img)  # ✅ resize before removing background
         result = remove(img)
 
         # HD output
@@ -69,6 +76,7 @@ def result():
         # Remove background
         with Image.open(dest_path) as img:
             img = img.convert("RGBA")
+            img = resize_image(img)  # ✅ resize step
             result_img = remove(img)
 
             hd_name = 'no_bg_' + os.path.splitext(sample_name)[0] + '.png'
@@ -110,5 +118,5 @@ def download_image(quality, filename):
 
 if __name__ == '__main__':
     import os
-    port = int(os.environ.get("PORT",5000))
-    app.run(host="0.0.0.0",port=port)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
